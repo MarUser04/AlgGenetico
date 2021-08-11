@@ -28,6 +28,10 @@ class Cross:
         self.pareja22 = aux_chromosomes[rands[3]]
 
     def cal_cross(self):
+        self.cross1 = []
+        self.cross2 = []
+        self.cross3 = []
+        self.cross4 = []
         self.prob_cross1 = random.randint(0, 100)  # prob cruce 1
         self.prob_cross2 = random.randint(0, 100)  # prob cruce 2
         self.point = random.randint(1, 9)  # cruce primera pareja
@@ -56,6 +60,20 @@ class Cross:
         else:
             self.cross3 = self.pareja21
             self.cross4 = self.pareja22
+
+        self.verify_row_total()
+
+    def verify_row_total(self):
+        total_1 = sum(self.cross1)
+        total_2 = sum(self.cross2)
+        total_3 = sum(self.cross3)
+        total_4 = sum(self.cross4)
+
+        for i in range(11):
+            self.cross1[i] = self.cross1[i] / total_1
+            self.cross2[i] = self.cross2[i] / total_2
+            self.cross3[i] = self.cross3[i] / total_3
+            self.cross4[i] = self.cross4[i] / total_4
 
     def return_crosses(self):
         return [

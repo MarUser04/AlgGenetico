@@ -5,6 +5,7 @@ class Fitness:
     performance = []
     risk = []
     fitness = []
+    population = []
 
     def __init__(self, population):
         self.population = population
@@ -34,6 +35,7 @@ class Fitness:
     def calculate_fitness(self):
         self.calculate_min()
         self.calculate_max()
+        self.fitness = []
         for idx, value in enumerate(self.performance):
             self.fitness.append(self.performance[idx] / self.risk[idx])
 

@@ -1,5 +1,6 @@
 venv
 input-population.txt
+generation_population.txt
 .idea
 __pycache__
 .test
