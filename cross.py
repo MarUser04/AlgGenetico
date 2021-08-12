@@ -17,6 +17,14 @@ class Cross:
 
     def __init__(self, chromosomes):
         self.chromosomes = chromosomes
+        self.pareja11 = []
+        self.pareja12 = []
+        self.pareja21 = []
+        self.pareja22 = []
+        self.point = 0
+        self.point2 = 0
+        self.prob_cross1 = 0
+        self.prob_cross2 = 0
         self.generate_crosses()
 
     def generate_crosses(self):

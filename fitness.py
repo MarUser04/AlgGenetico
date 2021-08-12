@@ -8,6 +8,10 @@ class Fitness:
     population = []
 
     def __init__(self, population):
+        self.population = []
+        self.fitness = []
+        self.performance = []
+        self.risk = []
         self.population = population
         self.calculate_fitness()
 

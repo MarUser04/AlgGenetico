@@ -7,7 +7,6 @@ class Mutation:
 
     def __init__(self, crosses):
         self.mutation_chromosomes = []
-        self.crosses = []
         self.crosses = crosses
         self.cal_mutation()
 
