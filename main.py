@@ -1,4 +1,4 @@
-from utils import read_files
+from utils import read_files, generate_population
 from selection import Selection
 from cross import Cross
 from mutation import Mutation
@@ -6,6 +6,7 @@ from mutation import Mutation
 
 if __name__ == '__main__':
 
+    generate_population.generate_input_population()
     population = read_files.read_population() #original population
 
     #loop
