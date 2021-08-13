@@ -2,109 +2,63 @@ import random
 
 
 class Cross:
-    cross1 = []
-    cross2 = []
-    cross3 = []
-    cross4 = []
-    pareja11 = []
-    pareja12 = []
-    pareja21 = []
-    pareja22 = []
-    point = 0
-    point2 = 0
-    prob_cross1 = 0
-    prob_cross2 = 0
+    #generic list
+    crosses = []
+    parejas = []
+    points = []
+    prob_crosses = []
 
     def __init__(self, chromosomes):
         self.chromosomes = chromosomes
-        self.pareja11 = []
-        self.pareja12 = []
-        self.pareja21 = []
-        self.pareja22 = []
-        self.point = 0
-        self.point2 = 0
-        self.prob_cross1 = 0
-        self.prob_cross2 = 0
+        self.crosses = []
+        self.points = []
+        self.prob_crosses = []
         self.generate_crosses()
 
     def generate_crosses(self):
-        rands = random.sample(range(4), 4)
+        rands = random.sample(range(len(self.chromosomes)), len(self.chromosomes))
         aux_chromosomes = self.chromosomes
-        self.pareja11 = aux_chromosomes[rands[0]]
-        self.pareja12 = aux_chromosomes[rands[1]]
-        self.pareja21 = aux_chromosomes[rands[2]]
-        self.pareja22 = aux_chromosomes[rands[3]]
+        self.parejas = []
+        for i in range(len(self.chromosomes)):
+            self.parejas.append(aux_chromosomes[rands[i]])
 
     def cal_cross(self):
-        self.cross1 = []
-        self.cross2 = []
-        self.cross3 = []
-        self.cross4 = []
-        self.prob_cross1 = random.randint(0, 100)  # prob cruce 1
-        self.prob_cross2 = random.randint(0, 100)  # prob cruce 2
-        self.point = random.randint(1, 9)  # cruce primera pareja
-        self.point2 = random.randint(1, 9)  # cruce segunda pareja
+        self.crosses = []
+        for i in range(int(len(self.chromosomes) / 2)):
+            self.points.append(0)
+            self.prob_crosses.append(0)
 
-        if self.prob_cross1 <= 65:
-            for i in range(11):
-                if i < self.point:
-                    self.cross1.append(self.pareja11[i])
-                    self.cross2.append(self.pareja12[i])
-                else:
-                    self.cross1.append(self.pareja12[i])
-                    self.cross2.append(self.pareja11[i])
-        else:
-            self.cross1 = self.pareja11
-            self.cross2 = self.pareja12
+        for i in range(int(len(self.chromosomes) / 2)):
+            self.prob_crosses.append(random.randint(0, 100))
+            self.points.append(random.randint(1, 9))
 
-        if self.prob_cross2 <= 65:
-            for i in range(11):
-                if i < self.point2:
-                    self.cross3.append(self.pareja21[i])
-                    self.cross4.append(self.pareja22[i])
-                else:
-                    self.cross3.append(self.pareja22[i])
-                    self.cross4.append(self.pareja21[i])
-        else:
-            self.cross3 = self.pareja21
-            self.cross4 = self.pareja22
+        cont = 0
+        for i in range(0, len(self.chromosomes), 2):
+            crosses_aux1 = []
+            crosses_aux2 = []
+            for j in range(11):
+                if self.prob_crosses[cont] <= 65:
+                    if j < self.points[cont]:
+                        crosses_aux1.append(self.parejas[i][j])
+                        crosses_aux2.append(self.parejas[i+1][j])
+                    else:
+                        crosses_aux2.append(self.parejas[i][j])
+                        crosses_aux1.append(self.parejas[i+1][j])
+
+            self.crosses.append(crosses_aux1)
+            self.crosses.append(crosses_aux2)
+            cont += 1
 
         self.verify_row_total()
 
     def verify_row_total(self):
-        total_1 = sum(self.cross1)
-        total_2 = sum(self.cross2)
-        total_3 = sum(self.cross3)
-        total_4 = sum(self.cross4)
+        totales = []
+        for i in range(len(self.crosses)):
+            totales.append(sum(self.crosses[i]))
 
-        for i in range(11):
-            self.cross1[i] = self.cross1[i] / total_1
-            self.cross2[i] = self.cross2[i] / total_2
-            self.cross3[i] = self.cross3[i] / total_3
-            self.cross4[i] = self.cross4[i] / total_4
+        for i, value in enumerate(self.crosses):
+            for j in range(len(value)):
+                self.crosses[i][j] = self.crosses[i][j] / totales[i]
 
     def return_crosses(self):
-        return [
-            self.cross1,
-            self.cross2,
-            self.cross3,
-            self.cross4,
-        ]
-
-    def print_crosses(self):
-        print('Pareja 1 ----------------------------')
-        print(self.point)
-        print(self.prob_cross1)
-        print(self.pareja11)
-        print(self.pareja12)
-        print('--------------------------')
-        print(self.cross1)
-        print(self.cross2)
-        print(' Pareja 2 ----------------------------')
-        print(self.point2)
-        print(self.prob_cross2)
-        print(self.pareja21)
-        print(self.pareja22)
-        print('--------------------------')
-        print(self.cross3)
-        print(self.cross4)
+        return self.crosses
