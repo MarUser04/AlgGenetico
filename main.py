@@ -2,7 +2,8 @@ from utils import read_files, generate_population
 from selection import Selection
 from cross import Cross
 from mutation import Mutation
-
+from fitness import Fitness
+import csv
 
 if __name__ == '__main__':
 
@@ -19,12 +20,10 @@ if __name__ == '__main__':
             # Selection
             selection = Selection(population)
             selection.cal_selection()
-            original_rows = selection.rows
 
-            # Cruce
-            cross = Cross(original_rows)
+            # Cross
+            cross = Cross(selection.rows)
             cross.cal_cross()
-            crosses = []
             crosses = cross.return_crosses()
 
             # Mutation
@@ -48,11 +47,11 @@ if __name__ == '__main__':
             for i in range(len(new_chromosomes)):
                 population[worst_indexes[i]] = new_chromosomes[i]
 
-
-        best_fitness.append(max(selection.fitness.fitness))
-        best_perfomances.append(max(selection.fitness.performance))
-        best_risks.append(max(selection.fitness.risk))
-        idx = selection.fitness.fitness.index(max(selection.fitness.fitness))
+        fitnessTotal = Fitness(population)
+        best_fitness.append(max(fitnessTotal.fitness))
+        best_perfomances.append(max(fitnessTotal.performance))
+        best_risks.append(max(fitnessTotal.risk))
+        idx = fitnessTotal.fitness.index(max(fitnessTotal.fitness))
         best_population_chromosomes.append(population[idx])
 
         f = open('./generation_population.txt', 'w')
@@ -71,4 +70,15 @@ if __name__ == '__main__':
     print(best_perfomances)
     print('Best Risk ------------------- ', len(best_risks))
     print(best_risks)
+
+
+    data = []
+
+    for i in range(len(best_perfomances)):
+        data.append([best_perfomances[i], best_risks[i], *best_population_chromosomes[i], best_fitness[i]])
+
+    f = open('alg_genetico.csv', 'w')
+    writer = csv.writer(f)
+    writer.writerows(data)
+    f.close()
 

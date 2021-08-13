@@ -2,7 +2,6 @@ import random
 
 
 class Cross:
-    #generic list
     crosses = []
     parejas = []
     points = []
@@ -13,6 +12,7 @@ class Cross:
         self.crosses = []
         self.points = []
         self.prob_crosses = []
+        self.parejas = []
         self.generate_crosses()
 
     def generate_crosses(self):
@@ -24,9 +24,8 @@ class Cross:
 
     def cal_cross(self):
         self.crosses = []
-        for i in range(int(len(self.chromosomes) / 2)):
-            self.points.append(0)
-            self.prob_crosses.append(0)
+        self.prob_crosses = []
+        self.points = []
 
         for i in range(int(len(self.chromosomes) / 2)):
             self.prob_crosses.append(random.randint(0, 100))
@@ -44,6 +43,9 @@ class Cross:
                     else:
                         crosses_aux2.append(self.parejas[i][j])
                         crosses_aux1.append(self.parejas[i+1][j])
+                else:
+                    crosses_aux1.append(self.parejas[i][j])
+                    crosses_aux2.append(self.parejas[i + 1][j])
 
             self.crosses.append(crosses_aux1)
             self.crosses.append(crosses_aux2)

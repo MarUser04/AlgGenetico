@@ -3,27 +3,21 @@ from fitness import Fitness
 
 
 class Selection:
-    global_population = []
     rows = []  # rows after division
     aux_population_selecteds = []  # aux population
 
     def __init__(self, population):
+        self.aux_population_selecteds = []
+        self.rows = []
         self.fitness = Fitness(population)  # get population
-        self.global_population = population
-
-    def get_population(self, population):
-        self.global_population = population
-        self.fitness = Fitness(population)
 
     def cal_selection(self):
-        selecteds = []
         remaining = [*self.fitness.fitness]
         self.aux_population_selecteds = []
         self.rows = []
         for i in range(10):
             population_random = random.sample(remaining, 22)
             self.aux_population_selecteds.append(population_random)
-            selecteds = [*selecteds, *population_random]
             for element in population_random:
                 remaining.remove(element)
 
@@ -34,12 +28,11 @@ class Selection:
             self.rows.append(aux_row)
 
     def worst_fitness(self):
-        minimums = []
         indexes = []
-        for i in range(5):
-            minimums.append(self.fitness.fitness.index(min(self.aux_population_selecteds[i])))
-        for i in range(len(minimums)):
-            indexes.append(min(minimums))
+        aux_fitness = self.fitness.fitness
+        while len(indexes) < 5:
+            indexes.append(aux_fitness.index(min(aux_fitness)))
+            aux_fitness.remove(min(aux_fitness))
         return indexes
 
 

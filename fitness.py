@@ -16,6 +16,7 @@ class Fitness:
         self.calculate_fitness()
 
     def calculate_max(self):
+        self.performance = []
         perfomance_file = read_files.read_performance()
         max = []
         for chromosome in self.population:
@@ -26,6 +27,7 @@ class Fitness:
         self.performance = max
 
     def calculate_min(self):
+        self.risk = []
         covar = read_files.read_covar()
         min = []
         for chromosome in self.population:
