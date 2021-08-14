@@ -12,8 +12,8 @@ class Mutation:
 
     def cal_mutation(self):
         self.mutation_chromosomes = []
-        prob_mutation = random.randint(0, 100)
         for value in self.crosses:
+            prob_mutation = random.randint(0, 100)
             if prob_mutation <= 2:
                 rands = random.sample(range(11), 2)
                 sum_values = value[rands[0]] + value[rands[1]]
